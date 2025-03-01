@@ -13,6 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Select;
+use App\Models\Law;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 
 class PartResource extends Resource
 {
@@ -27,9 +30,21 @@ class PartResource extends Resource
                 Forms\Components\TextInput::make('title')
                     ->required(),
 
+                Select::make('law_id')
+                    ->label('Law')
+                    ->options(Law::all()->pluck('title', 'id'))
+                    ->reactive()
+                    ->afterStateUpdated(fn(Set $set) => $set('chapter_id', null))
+                    ->required(),
                 Select::make('chapter_id')
-                    ->relationship('chapter', 'title')
-                    ->searchable()
+                    ->label('Chapter')
+                    ->options(function (Get $get) {
+                        $lawId = $get('law_id');
+                        if (!$lawId) {
+                            return [];
+                        }
+                        return Law::find($lawId)->chapters()->pluck('title', 'id');
+                    })
                     ->required(),
             ]);
     }
