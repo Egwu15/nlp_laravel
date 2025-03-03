@@ -27,7 +27,7 @@ function ViewSections({ sections, part, chapter, law }) {
                             {section.content}
                         </p>
                     </div>
-                ))}
+                ))} 
             </div>
         </AuthenticatedLayout>
     );
