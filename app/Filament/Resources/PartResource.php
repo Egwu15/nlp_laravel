@@ -55,13 +55,17 @@ class PartResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('chapter_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('chapter.title')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('chapter.law.title')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()

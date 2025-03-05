@@ -50,14 +50,25 @@ class SectionResource extends Resource
                 ->required(),
 
             // Part selection – uses session default if available.
+
             Select::make('part_id')
                 ->label('Part')
-                ->options(\App\Models\Part::pluck('title', 'id'))
-                ->afterStateHydrated(function ($state, callable $set) {
-                    if (empty($state)) {
+                ->options(function (Get $get) {
+                    $lawId = $get('law_id');
+                    if (!$lawId) {
+                        return [];
+                    }
+                    // Retrieve parts associated with the selected law through the chapters.
+                    return \App\Models\Part::whereHas('chapter', function ($query) use ($lawId) {
+                        $query->where('law_id', $lawId);
+                    })->pluck('title', 'id');
+                })
+                ->afterStateHydrated(function (Set $set, Get $get) {
+                    if (empty($get('part_id'))) {
                         $set('part_id', session('last_used_part_id'));
                     }
                 })
+                ->live() // Update the options when the law_id changes
                 ->required(),
 
             // Section number (required, numeric)

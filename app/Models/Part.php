@@ -16,4 +16,10 @@ class Part extends Model
     {
         return $this->hasMany(Section::class);
     }
+
+    public function law()
+    {
+        return $this->chapter->law();
+    }
+
 }
