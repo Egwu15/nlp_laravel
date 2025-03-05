@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Select;
 use App\Models\Law;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 
@@ -36,6 +37,11 @@ class PartResource extends Resource
                     ->reactive()
                     ->afterStateUpdated(fn(Set $set) => $set('chapter_id', null))
                     ->required(),
+
+                TextInput::make('number')
+                    ->numeric()
+                    ->required(),
+                    
                 Select::make('chapter_id')
                     ->label('Chapter')
                     ->options(function (Get $get) {
@@ -60,6 +66,9 @@ class PartResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('chapter.law.title')
                     ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('number')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

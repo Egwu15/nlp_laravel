@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 
 class ChapterResource extends Resource
 {
@@ -27,8 +28,12 @@ class ChapterResource extends Resource
                 Forms\Components\TextInput::make('title')
                     ->required(),
 
+                TextInput::make('number')
+                    ->numeric()
+                    ->required(),
 
-                Select::make('law_id')
+
+                Select::make('law')
                     ->relationship('law', 'title')
                     ->searchable()
                     ->required(),
@@ -42,7 +47,9 @@ class ChapterResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('law_id')
+                Tables\Columns\TextColumn::make('law.title')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('number')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')

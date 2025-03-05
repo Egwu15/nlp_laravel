@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 
 class ScheduleResource extends Resource
 {
@@ -28,8 +29,11 @@ class ScheduleResource extends Resource
                     ->required(),
                 Select::make('law_id')
                     ->relationship('law', 'title')
-                    // ->searchable()
                     ->required(),
+
+                TextInput::make('number')
+                    ->numeric()
+                    ->required()
 
 
 
@@ -42,7 +46,9 @@ class ScheduleResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('law_id')
+                Tables\Columns\TextColumn::make('law.title')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('number')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')

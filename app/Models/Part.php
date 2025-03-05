@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Part extends Model
 {
-    protected $fillable = ['title', 'chapter_id'];
+    protected $fillable = ['title', 'chapter_id', 'number'];
     public function chapter()
     {
         return $this->belongsTo(Chapter::class);
