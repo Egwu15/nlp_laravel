@@ -33,7 +33,7 @@ class ChapterResource extends Resource
                     ->required(),
 
 
-                Select::make('law')
+                Select::make('law_id')
                     ->relationship('law', 'title')
                     ->searchable()
                     ->required(),

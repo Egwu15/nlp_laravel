@@ -93,10 +93,10 @@ class SectionResource extends Resource
                     },
                 ]),
 
-            // Section content (Markdown Editor)
+
             MarkdownEditor::make('content')
                 ->label('Content')
-                ->required(),
+                ->required()->columnSpanFull(),
         ]);
     }
 

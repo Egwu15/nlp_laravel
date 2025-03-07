@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\MarkdownEditor;
 
 class ScheduleResource extends Resource
 {
@@ -33,9 +34,11 @@ class ScheduleResource extends Resource
 
                 TextInput::make('number')
                     ->numeric()
-                    ->required()
+                    ->required(),
 
-
+                MarkdownEditor::make('content')
+                    ->label('Content')
+                    ->required()->columnSpanFull(),
 
             ]);
     }
