@@ -3,9 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\SectionResource\Pages;
-use App\Filament\Resources\SectionResource\RelationManagers;
 use App\Models\Section;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -13,14 +11,9 @@ use Filament\Tables\Table;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\MarkdownEditor;
 use Closure;
-use Illuminate\Validation\Rule;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
-use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\Builder;
-
 
 
 class SectionResource extends Resource
