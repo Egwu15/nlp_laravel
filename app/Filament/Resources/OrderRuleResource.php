@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ScheduleResource\Pages;
-use App\Filament\Resources\ScheduleResource\RelationManagers;
-use App\Models\Schedule;
+use App\Filament\Resources\OrderRuleResource\Pages;
+use App\Filament\Resources\OrderRuleResource\RelationManagers;
+use App\Models\OrderRule;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,35 +12,28 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\MarkdownEditor;
 
-class ScheduleResource extends Resource
+class OrderRuleResource extends Resource
 {
-    protected static ?string $model = Schedule::class;
+    protected static ?string $model = OrderRule::class;
 
-    protected static ?string $navigationGroup = 'Laws';
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?string $navigationGroup = 'Court Rules';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('title')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('number')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\Select::make('court_rule_id')
+                    ->relationship('courtRule', 'title')
                     ->required(),
-                Select::make('law_id')
-                    ->relationship('law', 'title')
-                    ->required(),
-
-                TextInput::make('number')
-                    ->numeric()
-                    ->required(),
-
-                MarkdownEditor::make('content')
-                    ->label('Content')
-                    ->required()->columnSpanFull(),
-
             ]);
     }
 
@@ -50,9 +43,13 @@ class ScheduleResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('law.title')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('number')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('courtRule.title')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('rule_id')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -87,9 +84,9 @@ class ScheduleResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSchedules::route('/'),
-            'create' => Pages\CreateSchedule::route('/create'),
-            'edit' => Pages\EditSchedule::route('/{record}/edit'),
+            'index' => Pages\ListOrderRules::route('/'),
+            'create' => Pages\CreateOrderRule::route('/create'),
+            'edit' => Pages\EditOrderRule::route('/{record}/edit'),
         ];
     }
 }

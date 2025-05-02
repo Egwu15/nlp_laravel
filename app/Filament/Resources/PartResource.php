@@ -22,6 +22,7 @@ class PartResource extends Resource
 {
     protected static ?string $model = Part::class;
 
+    protected static ?string $navigationGroup = 'Laws';
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -41,7 +42,7 @@ class PartResource extends Resource
                 TextInput::make('number')
                     ->numeric()
                     ->required(),
-                    
+
                 Select::make('chapter_id')
                     ->label('Chapter')
                     ->options(function (Get $get) {

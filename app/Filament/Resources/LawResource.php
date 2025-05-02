@@ -18,6 +18,7 @@ class LawResource extends Resource
 {
     protected static ?string $model = Law::class;
 
+    protected static ?string $navigationGroup = 'Laws';
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
