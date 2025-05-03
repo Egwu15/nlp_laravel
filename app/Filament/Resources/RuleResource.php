@@ -54,7 +54,11 @@ class RuleResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('number')
+                Tables\Columns\TextColumn::make('courtRule.title')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('courtRule.title')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('orderRule.title')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
