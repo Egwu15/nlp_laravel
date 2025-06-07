@@ -45,9 +45,7 @@ class OrderRuleResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('courtRule.title')
                     ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('rule_id')
-                    ->numeric()
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

@@ -14,7 +14,7 @@ class OrderRule extends Model
         return $this->belongsTo(Rule::class);
     }
 
-    function courtRules(): BelongsTo
+    function courtRule(): BelongsTo
     {
         return $this->belongsTo(CourtRule::class);
     }
