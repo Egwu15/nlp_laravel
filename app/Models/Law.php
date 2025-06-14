@@ -3,38 +3,48 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Law extends Model
 {
     protected $fillable = [
         'title',
         'category_id',
-        'description'
+        'description',
+        'is_free'
     ];
 
-    public function chapters()
+    public function chapters(): HasMany
     {
         return $this->hasMany(Chapter::class);
     }
 
 
-    public function parts()
+    public function parts(): HasManyThrough
     {
         return $this->hasManyThrough(Part::class, Chapter::class);
     }
 
-    public function sections()
+    public function sections(): HasMany
     {
         return $this->hasMany(Section::class);
     }
 
-    public function category()
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function schedule()
+    public function schedule(): hasMany
     {
-        $this->hasMany(Schedule::class);
+        return $this->hasMany(Schedule::class);
     }
+
+    public function accessPlans()
+    {
+        return $this->morphToMany(AccessPlan::class, 'access_planable');
+    }
+
 }

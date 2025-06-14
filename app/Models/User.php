@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Enums\Role;
@@ -54,8 +55,20 @@ class User extends Authenticatable
         ];
     }
 
-    public function getNameAttribute()
+    public function getNameAttribute(): string
     {
         return "{$this->first_name} {$this->last_name}";
     }
+
+    public function subscriptions(): hasMany
+    {
+        return $this->hasMany(UserSubscription::class);
+    }
+
+    public function activeSubscriptions(): HasMany
+    {
+        return $this->subscriptions()
+            ->where('ends_at', '>=', now());
+    }
+
 }

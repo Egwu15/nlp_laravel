@@ -17,6 +17,11 @@ class CourtRule extends Model
     {
         return $this->hasMany(Rule::class);
     }
+    
+    public function accessPlans()
+    {
+        return $this->morphToMany(AccessPlan::class, 'access_planable');
+    }
 
 
 }

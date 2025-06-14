@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\CourtRule;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,12 +10,13 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('order_rules', function (Blueprint $table) {
+        Schema::create('access_planables', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->integer('number');
-            $table->foreignIdFor(CourtRule::class);
+            $table->foreignId('access_plan_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('access_planable_id');
+            $table->string('access_planable_type');
             $table->timestamps();
+            $table->index(['access_planable_type', 'access_planable_id']);
         });
     }
 
@@ -25,6 +25,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('order_rules');
+        Schema::dropIfExists('access_planables');
     }
 };

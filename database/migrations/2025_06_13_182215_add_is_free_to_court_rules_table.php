@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\CourtRule;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,12 +10,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('order_rules', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->integer('number');
-            $table->foreignIdFor(CourtRule::class);
-            $table->timestamps();
+        Schema::table('court_rules', function (Blueprint $table) {
+            $table->boolean('is_free')->default(false);
+            $table->boolean('is_published')->default(false);
         });
     }
 
@@ -25,6 +21,9 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('order_rules');
+        Schema::table('court_rules', function (Blueprint $table) {
+            $table->dropColumn('is_free');
+            $table->dropColumn('is_published');
+        });
     }
 };
