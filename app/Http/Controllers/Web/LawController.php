@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
+use App\Http\Controllers\Controller;
 use App\Models\Chapter;
-use Illuminate\Http\Request;
-use Inertia\Inertia;
 use App\Models\Law;
 use App\Models\Part;
+use Inertia\Inertia;
 
 class LawController extends Controller
 {
@@ -39,4 +39,4 @@ class LawController extends Controller
         return Inertia::render('Law/ViewSections', ['sections' => $sections, 'part' => $part, 'chapter' => $chapter, 'law' => $law]);
     }
 }
-   
+

@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Web\LawController;
+use App\Http\Controllers\Web\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\LawController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -32,4 +32,4 @@ Route::middleware('auth')->group(function () {
 });
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

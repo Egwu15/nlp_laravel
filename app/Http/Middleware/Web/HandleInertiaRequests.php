@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middleware\Web;
 
 use Illuminate\Http\Request;
 use Inertia\Middleware;
