@@ -13,6 +13,7 @@ class LoginController extends Controller
 {
     public function __invoke(Request $request)
     {
+
         $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
@@ -27,8 +28,7 @@ class LoginController extends Controller
         }
 
         return response()->json([
-            'user' => UserResource::make($user),
-            'token' => $user->createToken('mobile')->plainTextToken,
-        ]);
+            'user' => UserResource::make($user)
+        ], headers: ['Authorization' => $user->createToken('mobile')->plainTextToken]);
     }
 }

@@ -10,6 +10,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use App\Enums\Role;
+use Illuminate\Support\Facades\Auth;
 
 class UserResource extends Resource
 {
@@ -38,8 +39,8 @@ class UserResource extends Resource
                     ->required()
                     ->options([
                         Role::Customer->value => 'Customer',
-                        Role::Editor->value   => 'Editor',
-                        Role::Admin->value    => 'Admin',
+                        Role::Editor->value => 'Editor',
+                        Role::Admin->value => 'Admin',
                     ])
                     ->default(Role::Customer->value),
             ]);
@@ -97,5 +98,12 @@ class UserResource extends Resource
             'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
+    }
+
+    public static function canAccess(): bool
+    {
+        /**@var User $user */
+        $user = Auth::user();
+        return $user->role === Role::Admin;
     }
 }

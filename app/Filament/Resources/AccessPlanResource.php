@@ -2,12 +2,14 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\Role;
 use App\Filament\Resources\AccessPlanResource\Pages;
 use App\Filament\Resources\AccessPlanResource\RelationManagers;
 use App\Filament\Resources\AccessPlanResource\RelationManagers\CourtRuleRelationManager;
 use App\Filament\Resources\AccessPlanResource\RelationManagers\LawRelationManager;
 use App\Models\AccessPlan;
 use App\Models\Law;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
@@ -16,6 +18,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class AccessPlanResource extends Resource
 {
@@ -47,7 +50,7 @@ class AccessPlanResource extends Resource
                 Forms\Components\DateTimePicker::make('discount_expires_at')->minDate(now()),
                 Forms\Components\Toggle::make('active')
                     ->required(),
-              
+
             ]);
     }
 
@@ -110,5 +113,12 @@ class AccessPlanResource extends Resource
             'create' => Pages\CreateAccessPlan::route('/create'),
             'edit' => Pages\EditAccessPlan::route('/{record}/edit'),
         ];
+    }
+
+    public static function canAccess(): bool
+    {
+        /**@var User $user */
+        $user = Auth::user();
+        return $user->role === Role::Admin;
     }
 }

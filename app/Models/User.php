@@ -32,6 +32,7 @@ class User extends Authenticatable
 
     protected $casts = [
         'role' => Role::class,
+        'is_active' => 'boolean'
     ];
 
     /**

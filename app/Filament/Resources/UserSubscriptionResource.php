@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\Role;
 use App\Filament\Resources\UserSubscriptionResource\Pages;
 use App\Models\User;
 use App\Models\UserSubscription;
@@ -12,6 +13,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class UserSubscriptionResource extends Resource
 {
@@ -99,5 +101,12 @@ class UserSubscriptionResource extends Resource
             'create' => Pages\CreateUserSubscription::route('/create'),
             'edit' => Pages\EditUserSubscription::route('/{record}/edit'),
         ];
+    }
+
+    public static function canAccess(): bool
+    {
+        /**@var User $user */
+        $user = Auth::user();
+        return $user->role === Role::Admin;
     }
 }

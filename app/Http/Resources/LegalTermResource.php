@@ -2,13 +2,12 @@
 
 namespace App\Http\Resources;
 
-use App\Models\User;
+use App\Models\LegalTerm;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-
-/** @mixin User */
-class UserResource extends JsonResource
+/**@mixin  LegalTerm */
+class LegalTermResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,10 +18,8 @@ class UserResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
-            'is_active' => $this->is_active,
-            'email' => $this->email,
+            'term' => $this->term,
+            'definition' => $this->definition
         ];
     }
 }
