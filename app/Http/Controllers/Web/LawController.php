@@ -12,7 +12,6 @@ class LawController extends Controller
 {
     public function laws()
     {
-        $laws = Law::all();
         $laws = Law::orderBy('title')->get();
 
         return Inertia::render('Law/ViewLaws', ['laws' => $laws]);

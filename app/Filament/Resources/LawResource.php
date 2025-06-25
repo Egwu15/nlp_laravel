@@ -4,14 +4,19 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\LawResource\Pages;
 use App\Models\Law;
+use Filament\Facades\Filament;
 use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
 
 class LawResource extends Resource
 {
@@ -24,13 +29,14 @@ class LawResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('title')
+                TextInput::make('title')
                     ->required(),
-                Forms\Components\TextInput::make('description')
+                TextInput::make('description')
                     ->required(),
                 Select::make('category_id')
                     ->relationship('category', 'name')
                     ->required(),
+                Toggle::make('is_published')
             ]);
     }
 
@@ -38,18 +44,22 @@ class LawResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title')
+                TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('description')
+                ToggleColumn::make('is_published')
+                    ->visible(fn() => Filament::auth()->user()?->isAdmin()),
+                ToggleColumn::make('is_free')
+                    ->visible(fn() => Filament::auth()->user()?->isAdmin()),
+                TextColumn::make('description')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('category_id')
+                TextColumn::make('category.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

@@ -74,4 +74,9 @@ class User extends Authenticatable
             ->where('ends_at', '>=', now());
     }
 
+    public function isAdmin(): bool
+    {
+        return $this->role === Role::Admin;
+    }
+
 }

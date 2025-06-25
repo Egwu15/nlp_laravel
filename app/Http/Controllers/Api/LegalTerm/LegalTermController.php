@@ -13,8 +13,6 @@ class LegalTermController extends Controller
     public function searchLegalTerm(string $keyword)
     {
         $term = LegalTermService::searchLegalTerm($keyword);
-
-        return json_encode(['terms' => LegalTermResource::collection($term)]);
-
+        return response()->json(['terms' => LegalTermResource::collection($term)]);
     }
 }

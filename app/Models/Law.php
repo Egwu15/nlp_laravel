@@ -13,7 +13,13 @@ class Law extends Model
         'title',
         'category_id',
         'description',
-        'is_free'
+        'is_free',
+        'is_published',
+    ];
+
+    protected $casts = [
+        'is_published' => 'boolean',
+        'is_free' => 'boolean',
     ];
 
     public function chapters(): HasMany

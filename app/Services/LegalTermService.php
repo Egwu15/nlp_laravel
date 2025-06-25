@@ -12,7 +12,7 @@ class LegalTermService
     {
         /**@var Collection $terms */
         $terms = LegalTerm::where('term', 'like', "%{$word}%")
-            ->limit(9)
+            ->limit(20)
             ->get();
 
         return $terms;

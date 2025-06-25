@@ -4,7 +4,9 @@ namespace App\Services;
 
 use App\Models\WordOfTheDay;
 use App\Models\LegalTerm;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Carbon;
+
 
 class WordOfTheDayService
 {
@@ -26,5 +28,12 @@ class WordOfTheDayService
         ]);
 
         return $randomTerm;
+    }
+
+
+    public static function allTimeWords(): collection|WordOfTheDay
+    {
+        $monthDays = 30;
+        return WordOfTheDay::select(['date', 'legal_term_id'])->with(['term:id,term,definition'])->latest()->limit($monthDays)->get();
     }
 }

@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Api\LegalTerm;
 
 use App\Http\Controllers\Controller;
+use App\Models\WordOfTheDay;
 use App\Services\WordOfTheDayService;
 use Illuminate\Support\Carbon;
 
 class WordOfTheDayController extends Controller
 {
 
-    public function __invoke()
+    public function showToday()
     {
         $term = WordOfTheDayService::getToday();
         return response()->json([
@@ -18,4 +19,14 @@ class WordOfTheDayController extends Controller
             'date' => Carbon::today(),
         ]);
     }
+
+    public function showMonthly()
+    {
+        $terms = WordOfTheDayService::allTimeWords();
+        return response()->json([
+            'terms' => $terms,
+        ]);
+    }
+
+
 }
