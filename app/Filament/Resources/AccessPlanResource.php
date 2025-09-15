@@ -45,7 +45,10 @@ class AccessPlanResource extends Resource
                 Forms\Components\TextInput::make('duration_days')
                     ->required()
                     ->numeric(),
+                Forms\Components\TextInput::make('google_product_id')
+                    ->required(),
                 Forms\Components\TextInput::make('discount_price')
+                    ->default(0)
                     ->numeric(),
                 Forms\Components\DateTimePicker::make('discount_expires_at')->minDate(now()),
                 Forms\Components\Toggle::make('active')
@@ -59,6 +62,8 @@ class AccessPlanResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('google_product_id')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
                     ->searchable(),

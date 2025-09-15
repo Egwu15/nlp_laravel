@@ -4,10 +4,12 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CourtRuleResource\Pages;
 use App\Models\CourtRule;
+use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 
 class CourtRuleResource extends Resource
@@ -37,6 +39,10 @@ class CourtRuleResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
+                ToggleColumn::make('is_published')
+                    ->visible(fn() => Filament::auth()->user()?->isAdmin()),
+                ToggleColumn::make('is_free')
+                    ->visible(fn() => Filament::auth()->user()?->isAdmin()),
                 Tables\Columns\TextColumn::make('description')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')

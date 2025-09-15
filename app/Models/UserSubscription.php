@@ -22,9 +22,9 @@ class UserSubscription extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function accessPlan(): HasMany
+    public function accessPlan(): BelongsTo
     {
-        return $this->hasMany(AccessPlan::class);
+        return $this->belongsTo(AccessPlan::class);
     }
 
 }

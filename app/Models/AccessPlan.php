@@ -15,6 +15,7 @@ class AccessPlan extends Model
         'duration_days',
         'discount_price',
         'discount_expires_at',
+        'google_product_id'
     ];
 
 
