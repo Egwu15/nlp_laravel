@@ -6,7 +6,7 @@ use App\Http\Controllers\Api\Law\RuleController;
 use App\Http\Controllers\Api\SubscriptionController;
 use App\Http\Controllers\Webhooks\GoogleWebhookController;
 use App\Http\Controllers\Webhooks\PaystackWebhookController;
-use App\Http\Controllers\API\Auth\{LoginController, LogoutController, RegisterController, UserController};
+use App\Http\Controllers\Api\Auth\{LoginController, LogoutController, RegisterController, UserController};
 use App\Http\Controllers\Api\Law\LawController;
 use App\Http\Controllers\Api\LegalTerm\LegalTermController;
 use App\Http\Controllers\Api\LegalTerm\WordOfTheDayController;
