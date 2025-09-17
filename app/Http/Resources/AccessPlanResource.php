@@ -19,7 +19,6 @@ class AccessPlanResource extends JsonResource
         return [
             'name' => $this->name,
             'description' => $this->description,
-            'active' => $this->active,
             'price' => $this->price,
             'duration_days' => $this->duration_days,
             'discount_price' => $this->discount_price,

@@ -41,7 +41,7 @@ class AccessPlanResource extends Resource
                 Forms\Components\TextInput::make('price')
                     ->required()
                     ->numeric()
-                    ->prefix('$'),
+                    ->prefix('₦'),
                 Forms\Components\TextInput::make('duration_days')
                     ->required()
                     ->numeric(),
@@ -70,7 +70,7 @@ class AccessPlanResource extends Resource
                 Tables\Columns\IconColumn::make('active')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('price')
-                    ->money()
+                    ->money(currency: "NGN")
                     ->sortable(),
                 Tables\Columns\TextColumn::make('duration_days')
                     ->numeric()

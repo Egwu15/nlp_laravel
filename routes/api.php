@@ -4,6 +4,8 @@ use App\Http\Controllers\Api\AppForceUpdateController;
 use App\Http\Controllers\Api\ForgotPasswordController;
 use App\Http\Controllers\Api\Law\RuleController;
 use App\Http\Controllers\Api\SubscriptionController;
+use App\Http\Controllers\Webhooks\GoogleWebhookController;
+use App\Http\Controllers\Webhooks\PaystackWebhookController;
 use App\Http\Controllers\API\Auth\{LoginController, LogoutController, RegisterController, UserController};
 use App\Http\Controllers\Api\Law\LawController;
 use App\Http\Controllers\Api\LegalTerm\LegalTermController;
@@ -33,6 +35,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::Resource('/rules', RuleController::class);
 });
 
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/subscriptions/plans', [SubscriptionController::class, 'plans']);
+    Route::post('verify_google_purchase', [SubscriptionController::class, 'verifyGooglePurchase']);
+
+    Route::post('/webhooks/google-play', [GoogleWebhookController::class, 'handle']);
+    Route::post('/webhooks/paystack', [PaystackWebhookController::class, 'handle']);
+
 });
