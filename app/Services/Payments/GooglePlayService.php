@@ -60,7 +60,7 @@ class GooglePlayService extends BasePaymentService
             ]
         );
 
-        $userSubscription = UserSubscription::where('purchase_token', $purchaseToken)->first();
+        $userSubscription = UserSubscription::where('token', $purchaseToken)->first();
         // 3. Handle the notification as a state change.
 
         if (!$userSubscription) {

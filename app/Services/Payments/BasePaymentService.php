@@ -42,7 +42,7 @@ abstract class BasePaymentService
      */
     protected function cancelUserSubscription(
         int $userId,
-        int $planId
+        int $planId,
     ): ?UserSubscription
     {
         $subscription = UserSubscription::where('user_id', $userId)
@@ -50,7 +50,8 @@ abstract class BasePaymentService
             ->first();
 
         $subscription?->update([
-            'ends_at' => Carbon::now(), // End the subscription immediately
+            'ends_at' => Carbon::now(),
+            'status' => 'cancelled',
             'is_renewing' => false
         ]);
 
