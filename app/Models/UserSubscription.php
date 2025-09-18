@@ -14,7 +14,11 @@ class UserSubscription extends Model
         "starts_at",
         "ends_at",
         "is_renewing",
-        'access_plan_id'
+        'access_plan_id',
+        'token',
+        'provider',
+        'purchase_token',
+        'status'
     ];
 
     public function user(): BelongsTo

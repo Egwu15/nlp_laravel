@@ -9,6 +9,7 @@ use Google\Client;
 use Google\Exception;
 use Google\Service\AndroidPublisher;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 
 class GooglePlayService extends BasePaymentService
@@ -42,6 +43,7 @@ class GooglePlayService extends BasePaymentService
      */
     public function handleWebhook(array $payload): void
     {
+        Log::log('info', json_encode($payload));
         $messageData = json_decode(base64_decode($payload['message']['data']), true);
         $notification = $messageData['subscriptionNotification'];
 

@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AccessPlanResource;
+use App\Models\AccessPlan;
 use App\Models\UserSubscription;
 use App\Services\SubscriptionService;
+use Carbon\Carbon;
 use Google\Service\AndroidPublisher;
 use Google_Client;
 use Illuminate\Http\Request;
@@ -65,14 +67,20 @@ class SubscriptionController extends Controller
                 $status = 'active';
             }
 
+            $assess_plan = AccessPlan::select('id')->where('google_product_id', $productId)->first();
+
+
             // Store subscription
             UserSubscription::updateOrCreate(
-                ['purchase_token' => $purchaseToken],
+                ['token' => $purchaseToken],
                 [
                     'user_id' => $userId,
-                    'product_id' => $productId,
-                    'expiry_time' => $expiryDate,
+                    'access_plan_id' => $assess_plan->id,
+                    'starts_at' => Carbon::now(),
+                    'ends_at' => $expiryDate,
+                    'is_renewing' => true,
                     'status' => $status,
+                    'provider' => 'GooglePay'
                 ]
             );
 
