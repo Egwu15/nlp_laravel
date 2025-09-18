@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Law\RuleController;
 use App\Http\Controllers\Api\SubscriptionController;
 use App\Http\Controllers\Webhooks\GoogleWebhookController;
 use App\Http\Controllers\Webhooks\PaystackWebhookController;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Api\Auth\{LoginController, LogoutController, RegisterController, UserController};
 use App\Http\Controllers\Api\Law\LawController;
 use App\Http\Controllers\Api\LegalTerm\LegalTermController;
@@ -18,7 +19,8 @@ Route::post('/login', LoginController::class);
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink']);
 Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword']);
 
-Route::get('/test', function (Request $req) {
+Route::get('/test', action: function (Request $req) {
+    Log::log('info', "Logged some test");
     return response()->json(['message' => 'all good!']);
 });
 
