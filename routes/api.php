@@ -40,9 +40,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/subscriptions/plans', [SubscriptionController::class, 'plans']);
-    Route::post('verify_google_purchase', [SubscriptionController::class, 'verifyGooglePurchase']);
+    Route::post('/verify_google_purchase', [SubscriptionController::class, 'verifyGooglePurchase']);
 
-    Route::post('/webhooks/google-play', [GoogleWebhookController::class, 'handle']);
+
     Route::post('/webhooks/paystack', [PaystackWebhookController::class, 'handle']);
-
 });
+
+Route::post('/webhooks/google-play', [GoogleWebhookController::class, 'handle']);
