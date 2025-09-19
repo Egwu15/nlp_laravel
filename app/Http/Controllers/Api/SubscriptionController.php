@@ -42,11 +42,11 @@ class SubscriptionController extends Controller
         try {
             // Google Play API client
             $client = new Google_Client();
-            $client->setAuthConfig(storage_path('app/private/nigerian-law-app-b00db00422ed.json'));
+            $client->setAuthConfig(storage_path(config('googlePlay.credentials_path')));
             $client->addScope(AndroidPublisher::ANDROIDPUBLISHER);
 
             $service = new AndroidPublisher($client);
-            $packageName = "com.tedif.NigerianLawApp";
+            $packageName = config('googlePlay.package_name');
 
             $result = $service->purchases_subscriptions->get(
                 $packageName,
@@ -58,13 +58,11 @@ class SubscriptionController extends Controller
             $expiryDate = date('Y-m-d H:i:s', $expiry);
 
             // Status mapping
-            $status = 'pending';
+            $status = 'active';
             if ($result->getCancelReason()) {
                 $status = 'canceled';
             } elseif ($expiry < time()) {
                 $status = 'expired';
-            } else {
-                $status = 'active';
             }
 
             $assess_plan = AccessPlan::select('id')->where('google_product_id', $productId)->first();

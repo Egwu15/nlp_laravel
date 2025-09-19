@@ -71,7 +71,8 @@ class User extends Authenticatable
     public function activeSubscriptions(): HasMany
     {
         return $this->subscriptions()
-            ->where('ends_at', '>=', now());
+            ->where('ends_at', '>=', now())
+            ->where('status', 'active');
     }
 
     public function isAdmin(): bool

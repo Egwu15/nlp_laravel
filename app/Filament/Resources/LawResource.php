@@ -37,6 +37,7 @@ class LawResource extends Resource
                     ->relationship('category', 'name')
                     ->required(),
                 Toggle::make('is_published')
+                    ->visible(fn() => Filament::auth()->user()?->isAdmin()),
             ]);
     }
 

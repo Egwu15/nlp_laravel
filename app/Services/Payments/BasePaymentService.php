@@ -11,7 +11,6 @@ abstract class BasePaymentService
     /**
      * Handle the webhook payload from the provider
      */
-    abstract public function handleWebhook(array $payload): void;
 
     /**
      * Save subscription data after successful verification
@@ -40,14 +39,11 @@ abstract class BasePaymentService
     /**
      * Immediately cancel a user's subscription.
      */
-    protected function cancelUserSubscription(
-        int $userId,
-        int $planId,
+    public function cancelUserSubscription(
+        string $token,
     ): ?UserSubscription
     {
-        $subscription = UserSubscription::where('user_id', $userId)
-            ->where('access_plan_id', $planId)
-            ->first();
+        $subscription = UserSubscription::where('token', $token)->first();
 
         $subscription?->update([
             'ends_at' => Carbon::now(),
@@ -57,4 +53,5 @@ abstract class BasePaymentService
 
         return $subscription;
     }
+
 }

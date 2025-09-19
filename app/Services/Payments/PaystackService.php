@@ -13,7 +13,7 @@ class PaystackService extends BasePaymentService
         $data = $payload['data'];
 
         $subscriptionCode = $data['subscription_code'] ?? null;
-        $userSubscription = UserSubscription::where('subscription_code', $subscriptionCode)->first();
+        $userSubscription = UserSubscription::where('token', $subscriptionCode)->first();
 
         if (!$userSubscription && $event !== 'charge.success') {
             return;
@@ -39,7 +39,7 @@ class PaystackService extends BasePaymentService
                 );
 
                 // Save the subscription code for future lookups
-                $userSubscription->update(['subscription_code' => $subscriptionCode]);
+                $userSubscription->update(['token' => $subscriptionCode]);
 
                 break;
 
@@ -50,7 +50,7 @@ class PaystackService extends BasePaymentService
             case 'subscription.disable':
             case 'subscription.cancel':
                 if ($userSubscription) {
-                    $this->cancelUserSubscription($userSubscription->user_id, $userSubscription->access_plan_id);
+                    $this->cancelUserSubscription($subscriptionCode);
                 }
                 break;
 
