@@ -12,10 +12,6 @@ Artisan::command('inspire', function () {
 
 Schedule::command('queue:work --stop-when-empty')->everyMinute();
 
-Schedule::call(function () {
-    Log::info("Test schedule is running at " . now());
-})->everyMinute();
-
 Schedule::job(new SyncVoidedSubscriptions())
     ->timezone('africa/bangui')
     ->dailyAt('3:00');
