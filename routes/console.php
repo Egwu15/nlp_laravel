@@ -9,7 +9,7 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-//Schedule::job(new SyncVoidedSubscriptions())->dailyAt('3:00'); 3am
+Schedule::job(new SyncVoidedSubscriptions())->dailyAt('3:00');
 Schedule::job(new SyncVoidedSubscriptions())
     ->timezone('africa/bangui')
     ->everyMinute();
